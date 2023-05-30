@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/citySearchFragment">
+
+    <fragment
+        android:id="@+id/citySearchFragment"
+        android:name="com.ikbalabki.keysearch.ui.CitySearchFragment"
+        android:label="city_search_fragment"
+        tools:layout="@layout/city_search_fragment" >
+        <action
+            android:id="@+id/showOnMap"
+            app:destination="@id/cityOnMapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cityOnMapFragment"
+        android:name="com.ikbalabki.keysearch.ui.CityOnMapFragment"
+        android:label="fragment_city_on_map"
+        tools:layout="@layout/fragment_city_on_map" />
+</navigation>

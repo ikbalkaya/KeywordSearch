@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">City Search</string>
+    <string name="input_search_hint">Please enter a search term</string>
+</resources>
