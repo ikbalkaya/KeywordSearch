@@ -7,12 +7,16 @@ Which is similar to a binary tree with exception of nodes having 3 child nodes i
 This data structure is memory efficient and can be used for large data sets.
  * */
 internal class TernarySearchTrie<T : Searchable> {
-    var root: Node<T>? = null
+    private var root: Node<T>? = null
+    private var size = 0L
 
     fun add(t: T) {
         //recursively add node using ternary object and character index
         root = add(root, t, 0)
+        size++
     }
+
+    fun size() = size
 
     private fun add(givenNode: Node<T>?, t: T, charIndex: Int): Node<T>? {
         val char = t.text[charIndex]
