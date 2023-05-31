@@ -3,7 +3,19 @@ plugins {
     id 'org.jetbrains.kotlin.jvm'
 }
 
+
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks.named("test") {
+    useJUnitPlatform()
+}
+
+dependencies {
+    testImplementation 'com.google.code.gson:gson:2.8.9'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.1'
 }
