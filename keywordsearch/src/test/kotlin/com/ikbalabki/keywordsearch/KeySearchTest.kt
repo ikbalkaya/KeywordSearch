@@ -17,7 +17,6 @@ internal class KeySearchTest {
         //load pubs from json file from resources
         val pubsInputStream = KeySearchTest::class.java.getResourceAsStream("/pubs.json")
         val keySearch = buildFrom(pubsInputStream, Pub::class.java)
-        println(keySearch.size())
         assert(keySearch.size() == 51548L)
     }
 
@@ -27,7 +26,6 @@ internal class KeySearchTest {
         val geonamesInputStream =
             KeySearchTest::class.java.getResourceAsStream("/geonames-all-cities-with-a-population-1000.json")
         val keySearch = buildFrom(geonamesInputStream, Geoname::class.java)
-        println(keySearch.size())
         assert(keySearch.size() == 140938L)
     }
 }
