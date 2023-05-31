@@ -34,4 +34,6 @@ class KeySearch<T : Searchable> {
             SearchResult.Hit(result)
         }
     }
+
+    fun size() = ternarySearchTrie.size()
 }
