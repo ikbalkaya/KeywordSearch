@@ -6,7 +6,7 @@ This class implements ternary search tree
 Which is similar to a binary tree with exception of nodes having 3 child nodes instead of one
 This data structure is memory efficient and can be used for large data sets.
  * */
-internal class TernarySearchTrie<T : Searchable> {
+internal class TernarySearchTrie<T : Searchable>(private val caseSensitive: Boolean) {
     private var root: Node<T>? = null
     private var size = 0L
 
@@ -19,7 +19,7 @@ internal class TernarySearchTrie<T : Searchable> {
     fun size() = size
 
     private fun add(givenNode: Node<T>?, t: T, charIndex: Int): Node<T>? {
-        val char = t.text[charIndex]
+        val char = if (caseSensitive) t.text[charIndex] else t.text[charIndex].lowercaseChar()
         var node = givenNode
         //if deos not already exist create it
         if (givenNode == null) {
@@ -30,7 +30,7 @@ internal class TernarySearchTrie<T : Searchable> {
             }
             node = Node(
                     nodeTernaryObject,
-                    char = t.text[charIndex],
+                    char = char,
                     left = null,
                     middle = null,
                     right = null
