@@ -50,4 +50,44 @@ internal class KeySearchTest {
         assert(result is SearchResult.Miss)
     }
 
+    @Test
+    fun testProgressiveSearchEndingWitHit() {
+        val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
+        val keySearch = buildFrom(citiesInputStream, City::class.java)
+
+        val nameToSearch = "london"
+        var count = Int.MAX_VALUE
+        nameToSearch.forEachIndexed { index, _ ->
+            val result = keySearch.find(nameToSearch.substring(0, index + 1))
+            assert(result is SearchResult.Hit)
+            val nowCount = (result as SearchResult.Hit).items.size
+            // the number of hits should be less or equal to than the previous one
+            assert(nowCount <= count)
+            count = nowCount
+        }
+
+    }
+
+
+    @Test
+    fun testProgressiveSearchEndingWithMiss() {
+        val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
+        val keySearch = buildFrom(citiesInputStream, City::class.java)
+
+        val nameToSearch = "londonk"
+        var count = Int.MAX_VALUE
+        nameToSearch.forEachIndexed { index, _ ->
+            val result = keySearch.find(nameToSearch.substring(0, index + 1))
+            if (index == nameToSearch.length - 1) {
+                assert(result is SearchResult.Miss)
+                return@forEachIndexed
+            }
+            assert(result is SearchResult.Hit)
+            val nowCount = (result as SearchResult.Hit).items.size
+            // the number of hits should be less or equal to than the previous one
+            assert(nowCount <= count)
+            count = nowCount
+        }
+
+    }
 }
