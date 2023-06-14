@@ -42,4 +42,12 @@ internal class KeySearchTest {
         assert((result as SearchResult.Hit).items.size ==6 )
     }
 
+    @Test
+    fun testKeywordMisses() {
+        val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
+        val keySearch = buildFrom(citiesInputStream, City::class.java)
+        val result = keySearch.find("lkn") // no city starts with "lkn"
+        assert(result is SearchResult.Miss)
+    }
+
 }
