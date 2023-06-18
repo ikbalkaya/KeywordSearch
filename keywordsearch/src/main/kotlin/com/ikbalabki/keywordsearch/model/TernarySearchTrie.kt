@@ -10,26 +10,26 @@ internal class TernarySearchTrie<T : Searchable>(private val caseSensitive: Bool
     private var root: Node<T>? = null
     private var size = 0L
 
-    fun add(t: T) {
+    fun add(searchable: T) {
         //recursively add node using ternary object and character index
-        root = add(root, t, 0)
+        root = add(root, searchable, 0)
         size++
     }
 
     fun size() = size
 
-    private fun add(givenNode: Node<T>?, t: T, charIndex: Int): Node<T>? {
-        val char = if (caseSensitive) t.text[charIndex] else t.text[charIndex].lowercaseChar()
+    private fun add(givenNode: Node<T>?, searchable: T, charIndex: Int): Node<T>? {
+        val char = if (caseSensitive) searchable.text[charIndex] else searchable.text[charIndex].lowercaseChar()
         var node = givenNode
         //if deos not already exist create it
         if (givenNode == null) {
-            //only  add the object to the  if it's the terminal character reached
-            var nodeTernaryObject: T? = null
-            if (t.text.length == (charIndex + 1)) {
-                nodeTernaryObject = t
+            //only  add the object to the tree if it's the terminal character reached
+            var searchableObject: T? = null
+            if (searchable.text.length == (charIndex + 1)) {
+                searchableObject = searchable
             }
             node = Node(
-                    nodeTernaryObject,
+                    searchableObject,
                     char = char,
                     left = null,
                     middle = null,
@@ -39,25 +39,27 @@ internal class TernarySearchTrie<T : Searchable>(private val caseSensitive: Bool
         }
 
         //recursively add left/ right nodes, right and left nodes in ternary tree
-        //if given char exist in mid node continue with middle link and finish middle link when terminal character is reached
-        node?.let {
+        //if given char exist in mid node continue with middle link and finish middle link when
+        // terminal character is reached
+        node?.let { tNode ->
             when {
-                char < it.char -> {
-                    it.left = add(it.left, t, charIndex)
+                char < tNode.char -> {
+                    tNode.left = add(tNode.left, searchable, charIndex)
                 }
-                char > it.char -> {
-                    it.right = add(it.right, t, charIndex)
+                char > tNode.char -> {
+                    tNode.right = add(tNode.right, searchable, charIndex)
                 }
-                charIndex < t.text.length - 1 -> {
+                charIndex < searchable.text.length - 1 -> {
                     //follow with next middle node
-                    it.middle = add(node.middle, t, charIndex + 1)
+                    tNode.middle = add(node.middle, searchable, charIndex + 1)
                 }
-                else -> it.ternaryObject = t
+                else -> tNode.searchable = searchable
             }
         }
 
         return node
     }
+
 
     fun itemsWithPrefix(prefix: String): List<T> {
         require(prefix.isNotEmpty())
@@ -87,7 +89,7 @@ internal class TernarySearchTrie<T : Searchable>(private val caseSensitive: Bool
                     // remaining objects sorted using pre-order traversal to get items
                     // sorted
                     //add the keyword itself if it's also a ternary object
-                    node.ternaryObject?.let {
+                    node.searchable?.let {
                         foundObjects.add(it)
                     }
                     //add all objects traversing from the middle node
@@ -103,7 +105,7 @@ internal class TernarySearchTrie<T : Searchable>(private val caseSensitive: Bool
         }
         traverseAdd(node.left, objectList)
 
-        node.ternaryObject?.let {
+        node.searchable?.let {
             objectList.add(it)
         }
         traverseAdd(node.middle, objectList)
@@ -112,7 +114,7 @@ internal class TernarySearchTrie<T : Searchable>(private val caseSensitive: Bool
 }
 
 data class Node<T : Searchable>(
-    var ternaryObject: T?,
+    var searchable: T?,
     var char: Char,
     var left: Node<T>?,
     var middle: Node<T>?,
