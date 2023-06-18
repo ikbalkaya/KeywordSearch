@@ -10,12 +10,20 @@ internal class TernarySearchTrie<T : Searchable>(private val caseSensitive: Bool
     private var root: Node<T>? = null
     private var size = 0L
 
+    /**
+     * Add an object to be searchable for later.
+     *
+     * @param searchable object to be searchable
+     * **/
     fun add(searchable: T) {
         //recursively add node using ternary object and character index
         root = add(root, searchable, 0)
         size++
     }
 
+    /**
+     * Number of searchable objects in the tree.
+     * */
     fun size() = size
 
     private fun add(givenNode: Node<T>?, searchable: T, charIndex: Int): Node<T>? {
@@ -60,7 +68,13 @@ internal class TernarySearchTrie<T : Searchable>(private val caseSensitive: Bool
         return node
     }
 
-
+    /**
+     * Find objects that matches the start of the keyword.
+     *
+     * @param prefix prefix to be searched
+     *
+     * @return list of objects that matches the prefix
+     * */
     fun itemsWithPrefix(prefix: String): List<T> {
         require(prefix.isNotEmpty())
         val items = mutableListOf<T>()
