@@ -59,29 +59,29 @@ internal class TernarySearchTrie<T : Searchable>(private val caseSensitive: Bool
         return node
     }
 
-    fun search(keyword: String): List<T> {
-        require(keyword.isNotEmpty())
-        val ts = mutableListOf<T>()
-        searchKeyword(root, keyword, ts)
-        return ts
+    fun itemsWithPrefix(prefix: String): List<T> {
+        require(prefix.isNotEmpty())
+        val items = mutableListOf<T>()
+        findItemsWithPrefix(root, prefix, items)
+        return items
     }
 
-    private fun searchKeyword(node: Node<T>?, keyword: String, foundObjects: MutableList<T>) {
+    private fun findItemsWithPrefix(node: Node<T>?, prefix: String, foundObjects: MutableList<T>) {
         if (node == null) return
         when {
-            keyword.first() < node.char -> {
-                searchKeyword(node.left, keyword, foundObjects)
+            prefix.first() < node.char -> {
+                findItemsWithPrefix(node.left, prefix, foundObjects)
             }
-            keyword.first() > node.char -> {
-                searchKeyword(node.right, keyword, foundObjects)
+            prefix.first() > node.char -> {
+                findItemsWithPrefix(node.right, prefix, foundObjects)
             }
-            keyword.first() == node.char -> {
-                if (keyword.length > 1) {
+            prefix.first() == node.char -> {
+                if (prefix.length > 1) {
                     //last character not reached yet
                     //if keyword is 'lon' - and 'l' is found, remove first char from keyword and
                     // continue search for 'on'
-                    val newKeyword = keyword.substring(1, keyword.length)
-                    searchKeyword(node.middle, newKeyword, foundObjects)
+                    val newKeyword = prefix.substring(1, prefix.length)
+                    findItemsWithPrefix(node.middle, newKeyword, foundObjects)
                 } else {
                     //we have reached to the end of keyword, now we should add
                     // remaining objects sorted using pre-order traversal to get items
