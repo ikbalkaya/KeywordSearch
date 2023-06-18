@@ -125,6 +125,19 @@ internal class TernarySearchTrie<T : Searchable>(private val caseSensitive: Bool
         traverseAdd(node.middle, objectList)
         traverseAdd(node.right, objectList)
     }
+
+    /**
+     * Check if the tree contains the searchable object.
+     *
+     * @param searchable object to be searched
+     *
+     * @return true if the object is found, false otherwise
+     * */
+    fun contains(searchable: T): Boolean {
+        itemsWithPrefix(searchable.text).let {
+            return it.contains(searchable)
+        }
+    }
 }
 
 data class Node<T : Searchable>(
