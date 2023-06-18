@@ -7,7 +7,6 @@ import com.ikbalabki.keywordsearch.model.TernarySearchTrie
 class KeySearch<T : Searchable>(private val caseSensitive: Boolean = false) {
     private val ternarySearchTrie = TernarySearchTrie<T>(caseSensitive)
 
-
     /**
      * Add an object to be searchable for later.
      *
@@ -36,5 +35,8 @@ class KeySearch<T : Searchable>(private val caseSensitive: Boolean = false) {
         }
     }
 
+    /**
+     * Number of searchable objects.
+     * */
     fun size() = ternarySearchTrie.size()
 }
