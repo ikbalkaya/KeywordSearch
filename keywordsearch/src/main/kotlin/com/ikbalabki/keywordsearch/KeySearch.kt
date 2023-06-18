@@ -36,6 +36,15 @@ class KeySearch<T : Searchable>(private val caseSensitive: Boolean = false) {
     }
 
     /**
+     * Check if the searchable object is already added.
+     *
+     * @param searchable object to be checked
+     *
+     * @return true if the object is already added, false otherwise
+     * */
+    fun hasItem(searchable: T) = ternarySearchTrie.contains(searchable)
+
+    /**
      * Number of searchable objects.
      * */
     fun size() = ternarySearchTrie.size()
