@@ -2,6 +2,8 @@ package com.ikbalabki.keywordsearch
 
 import com.ikbalabki.keywordsearch.model.SearchResult
 import org.junit.jupiter.api.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 internal class KeySearchTest {
 
@@ -108,5 +110,27 @@ internal class KeySearchTest {
         assert(result is SearchResult.Miss)
     }
 
+    @Test
+    fun testKeysearchHasItemReturnsTrue() {
+        val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
+        val pair = getPair(citiesInputStream, City::class.java, caseSensitive = false)
+        val keySearch = pair.first
+        val list = pair.second
+
+        val existingCity = list.random()
+        assertTrue(keySearch.hasItem(existingCity))
+    }
+
+    @Test
+    fun testKeysearchNoItemReturnsFalse() {
+        val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
+        val pair = getPair(citiesInputStream, City::class.java, caseSensitive = false)
+        val keySearch = pair.first
+        val list = pair.second
+
+        val existingCity = list.random()
+        val  invalidCity = existingCity.copy(country = "invalid")
+        assertFalse(keySearch.hasItem(invalidCity))
+    }
 
 }

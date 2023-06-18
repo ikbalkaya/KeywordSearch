@@ -54,3 +54,24 @@ inline fun <reified T:Searchable> buildFrom(inputStream: InputStream, t:Class<T>
 
     return keySearch
 }
+
+//also return list of items
+inline fun <reified T:Searchable> getPair(inputStream: InputStream, t:Class<T> ,
+                                            caseSensitive: Boolean = true) :
+        Pair<KeySearch<T>,List<T>>{
+    //read as stream for memory efficiency
+    val list = mutableListOf<T>()
+    val keySearch = KeySearch<T>()
+    val jsonReader = JsonReader(inputStream.reader())
+    jsonReader.beginArray()
+    //read json
+    val gson = Gson()
+    while (jsonReader.hasNext()) {
+        val item = gson.fromJson<T>(jsonReader, t)
+        keySearch.add(item)
+        list.add(item)
+    }
+    jsonReader.close()
+
+    return Pair(keySearch,list)
+}
