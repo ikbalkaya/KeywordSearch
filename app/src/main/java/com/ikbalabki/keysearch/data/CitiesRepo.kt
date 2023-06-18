@@ -16,7 +16,7 @@ class CitiesRepo(private val citySearch: KeySearch<City>,
     val result: LiveData<SearchResult<City>> = _result
 
     fun searchFor(keyword: String) {
-        val result = citySearch.find(keyword.lowercase(Locale.getDefault()))
+        val result = citySearch.itemsWithKeyword(keyword.lowercase(Locale.getDefault()))
         _result.value = result
     }
 

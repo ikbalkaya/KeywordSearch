@@ -2,7 +2,6 @@ package com.ikbalabki.keywordsearch
 
 import com.ikbalabki.keywordsearch.model.SearchResult
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
 
 internal class KeySearchTest {
 
@@ -36,7 +35,7 @@ internal class KeySearchTest {
         //load cities from json file from resources
         val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
         val keySearch = buildFrom(citiesInputStream, City::class.java)
-        val result = keySearch.find("london")
+        val result = keySearch.itemsWithKeyword("london")
         assert(result is SearchResult.Hit)
         // there are 6 "London"s
         assert((result as SearchResult.Hit).items.size ==6 )
@@ -46,7 +45,7 @@ internal class KeySearchTest {
     fun testKeywordMisses() {
         val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
         val keySearch = buildFrom(citiesInputStream, City::class.java)
-        val result = keySearch.find("lkn") // no city starts with "lkn"
+        val result = keySearch.itemsWithKeyword("lkn") // no city starts with "lkn"
         assert(result is SearchResult.Miss)
     }
 
@@ -58,7 +57,7 @@ internal class KeySearchTest {
         val nameToSearch = "london"
         var count = Int.MAX_VALUE
         nameToSearch.forEachIndexed { index, _ ->
-            val result = keySearch.find(nameToSearch.substring(0, index + 1))
+            val result = keySearch.itemsWithKeyword(nameToSearch.substring(0, index + 1))
             assert(result is SearchResult.Hit)
             val nowCount = (result as SearchResult.Hit).items.size
             // the number of hits should be less or equal to than the previous one
@@ -77,7 +76,7 @@ internal class KeySearchTest {
         val nameToSearch = "londonk"
         var count = Int.MAX_VALUE
         nameToSearch.forEachIndexed { index, _ ->
-            val result = keySearch.find(nameToSearch.substring(0, index + 1))
+            val result = keySearch.itemsWithKeyword(nameToSearch.substring(0, index + 1))
             if (index == nameToSearch.length - 1) {
                 assert(result is SearchResult.Miss)
                 return@forEachIndexed
@@ -97,7 +96,7 @@ internal class KeySearchTest {
     fun testKeywordCaseSensitiveMiss() {
         val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
         val keySearch = buildFrom(citiesInputStream, City::class.java)
-        val result = keySearch.find("londoN") // default is case sensitive
+        val result = keySearch.itemsWithKeyword("londoN") // default is case sensitive
         assert(result is SearchResult.Miss)
     }
 
@@ -105,7 +104,9 @@ internal class KeySearchTest {
     fun testKeywordCaseInsensitiveHit() {
         val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
         val keySearch = buildFrom(citiesInputStream, City::class.java, caseSensitive = false)
-        val result = keySearch.find("londoN") // default is case sensitive
+        val result = keySearch.itemsWithKeyword("londoN") // default is case sensitive
         assert(result is SearchResult.Miss)
     }
+
+
 }

@@ -27,7 +27,7 @@ class KeySearch<T : Searchable>(private val caseSensitive: Boolean = false) {
      * If there is no match, [SearchResult.Miss] will be returned.
      * If there is a match, [SearchResult.Hit] will be returned, with the list of matched objects.
      * */
-    fun find(keyword: String): SearchResult<T> {
+    fun itemsWithKeyword(keyword: String): SearchResult<T> {
         val result = ternarySearchTrie.itemsWithPrefix(keyword)
         return if (result.isEmpty()) {
             SearchResult.Miss()
