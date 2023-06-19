@@ -3,7 +3,7 @@ package com.ikbalabki.keysearch.di
 import android.content.Context
 import com.ikbalabki.keysearch.R
 import com.ikbalabki.keysearch.data.CitiesRepo
-import com.ikbalabki.keywordsearch.KeySearch
+import com.ikbalabki.keywordsearch.KeywordSearch
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,6 +17,6 @@ class AppModule {
     @Provides
     fun provideRepo(@ApplicationContext context:Context): CitiesRepo{
         val inputStream = context.resources.openRawResource(R.raw.cities)
-        return CitiesRepo(KeySearch(),inputStream)
+        return CitiesRepo(KeywordSearch(),inputStream)
     }
 }

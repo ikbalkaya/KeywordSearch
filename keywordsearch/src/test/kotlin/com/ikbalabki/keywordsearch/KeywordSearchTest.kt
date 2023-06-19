@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-internal class KeySearchTest {
+internal class KeywordSearchTest {
 
     @Test
     fun testAddCities() {
         //load cities from json file from resources
-        val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
+        val citiesInputStream = KeywordSearchTest::class.java.getResourceAsStream("/cities.json")
         val keySearch = buildFrom(citiesInputStream, City::class.java)
         assert(keySearch.size() == 209557L)
     }
@@ -18,7 +18,7 @@ internal class KeySearchTest {
     @Test
     fun testAddPubs() {
         //load pubs from json file from resources
-        val pubsInputStream = KeySearchTest::class.java.getResourceAsStream("/pubs.json")
+        val pubsInputStream = KeywordSearchTest::class.java.getResourceAsStream("/pubs.json")
         val keySearch = buildFrom(pubsInputStream, Pub::class.java)
         assert(keySearch.size() == 51548L)
     }
@@ -27,7 +27,7 @@ internal class KeySearchTest {
     fun testAddGeonames() {
         //load geonames from json file from resources
         val geonamesInputStream =
-            KeySearchTest::class.java.getResourceAsStream("/geonames-all-cities-with-a-population-1000.json")
+            KeywordSearchTest::class.java.getResourceAsStream("/geonames-all-cities-with-a-population-1000.json")
         val keySearch = buildFrom(geonamesInputStream, Geoname::class.java)
         assert(keySearch.size() == 140938L)
     }
@@ -35,7 +35,7 @@ internal class KeySearchTest {
     @Test
     fun testKeywordHitShouldReturnCorrectResult() {
         //load cities from json file from resources
-        val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
+        val citiesInputStream = KeywordSearchTest::class.java.getResourceAsStream("/cities.json")
         val keySearch = buildFrom(citiesInputStream, City::class.java)
         val result = keySearch.itemsWithKeyword("london")
         assert(result is SearchResult.Hit)
@@ -45,7 +45,7 @@ internal class KeySearchTest {
 
     @Test
     fun testKeywordMisses() {
-        val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
+        val citiesInputStream = KeywordSearchTest::class.java.getResourceAsStream("/cities.json")
         val keySearch = buildFrom(citiesInputStream, City::class.java)
         val result = keySearch.itemsWithKeyword("lkn") // no city starts with "lkn"
         assert(result is SearchResult.Miss)
@@ -53,7 +53,7 @@ internal class KeySearchTest {
 
     @Test
     fun testProgressiveSearchEndingWitHit() {
-        val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
+        val citiesInputStream = KeywordSearchTest::class.java.getResourceAsStream("/cities.json")
         val keySearch = buildFrom(citiesInputStream, City::class.java)
 
         val nameToSearch = "london"
@@ -72,7 +72,7 @@ internal class KeySearchTest {
 
     @Test
     fun testProgressiveSearchEndingWithMiss() {
-        val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
+        val citiesInputStream = KeywordSearchTest::class.java.getResourceAsStream("/cities.json")
         val keySearch = buildFrom(citiesInputStream, City::class.java)
 
         val nameToSearch = "londonk"
@@ -96,7 +96,7 @@ internal class KeySearchTest {
 
     @Test
     fun testKeywordCaseSensitiveMiss() {
-        val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
+        val citiesInputStream = KeywordSearchTest::class.java.getResourceAsStream("/cities.json")
         val keySearch = buildFrom(citiesInputStream, City::class.java, caseSensitive = true)
         val result = keySearch.itemsWithKeyword("londoN") // default is case insensitive
         assert(result is SearchResult.Miss)
@@ -104,7 +104,7 @@ internal class KeySearchTest {
 
     @Test
     fun testKeywordCaseInsensitiveHit() {
-        val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
+        val citiesInputStream = KeywordSearchTest::class.java.getResourceAsStream("/cities.json")
         val keySearch = buildFrom(citiesInputStream, City::class.java, caseSensitive = false)
         val result = keySearch.itemsWithKeyword("londoN") // default is case insensitive
         assert(result is SearchResult.Hit)
@@ -112,7 +112,7 @@ internal class KeySearchTest {
 
     @Test
     fun testKeysearchHasItemReturnsTrue() {
-        val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
+        val citiesInputStream = KeywordSearchTest::class.java.getResourceAsStream("/cities.json")
         val pair = getPair(citiesInputStream, City::class.java, caseSensitive = false)
         val keySearch = pair.first
         val list = pair.second
@@ -123,7 +123,7 @@ internal class KeySearchTest {
 
     @Test
     fun testKeysearchNoItemReturnsFalse() {
-        val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
+        val citiesInputStream = KeywordSearchTest::class.java.getResourceAsStream("/cities.json")
         val pair = getPair(citiesInputStream, City::class.java, caseSensitive = false)
         val keySearch = pair.first
         val list = pair.second

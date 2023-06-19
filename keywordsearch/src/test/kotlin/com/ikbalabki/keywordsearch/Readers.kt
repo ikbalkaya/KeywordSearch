@@ -39,39 +39,39 @@ data class Geoname(val geoname_id: String, val name: String,
         get() = name.lowercase(Locale.getDefault())
 }
 inline fun <reified T:Searchable> buildFrom(inputStream: InputStream, t:Class<T> ,
-                                            caseSensitive: Boolean = false) : KeySearch<T>{
+                                            caseSensitive: Boolean = false) : KeywordSearch<T>{
     //read as stream for memory efficiency
-    val keySearch = KeySearch<T>(caseSensitive)
+    val keywordSearch = KeywordSearch<T>(caseSensitive)
     val jsonReader = JsonReader(inputStream.reader())
     jsonReader.beginArray()
     //read json
     val gson = Gson()
     while (jsonReader.hasNext()) {
         val item = gson.fromJson<T>(jsonReader, t)
-        keySearch.add(item)
+        keywordSearch.add(item)
     }
     jsonReader.close()
 
-    return keySearch
+    return keywordSearch
 }
 
 //also return list of items
 inline fun <reified T:Searchable> getPair(inputStream: InputStream, t:Class<T> ,
                                             caseSensitive: Boolean = true) :
-        Pair<KeySearch<T>,List<T>>{
+        Pair<KeywordSearch<T>,List<T>>{
     //read as stream for memory efficiency
     val list = mutableListOf<T>()
-    val keySearch = KeySearch<T>()
+    val keywordSearch = KeywordSearch<T>()
     val jsonReader = JsonReader(inputStream.reader())
     jsonReader.beginArray()
     //read json
     val gson = Gson()
     while (jsonReader.hasNext()) {
         val item = gson.fromJson<T>(jsonReader, t)
-        keySearch.add(item)
+        keywordSearch.add(item)
         list.add(item)
     }
     jsonReader.close()
 
-    return Pair(keySearch,list)
+    return Pair(keywordSearch,list)
 }

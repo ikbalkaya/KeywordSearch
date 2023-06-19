@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.stream.JsonReader
-import com.ikbalabki.keywordsearch.KeySearch
+import com.ikbalabki.keywordsearch.KeywordSearch
 import com.ikbalabki.keywordsearch.model.SearchResult
 import java.io.InputStream
 import java.util.*
 
 
-class CitiesRepo(private val citySearch: KeySearch<City>,
+class CitiesRepo(private val citySearch: KeywordSearch<City>,
                  private val inputStream: InputStream) {
     private val _result = MutableLiveData<SearchResult<City>>()
     val result: LiveData<SearchResult<City>> = _result

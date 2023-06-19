@@ -4,7 +4,7 @@ import com.ikbalabki.keywordsearch.model.SearchResult
 import com.ikbalabki.keywordsearch.model.Searchable
 import com.ikbalabki.keywordsearch.model.TernarySearchTrie
 
-class KeySearch<T : Searchable>(caseSensitive: Boolean = false) {
+class KeywordSearch<T : Searchable>(caseSensitive: Boolean = false) {
     private val ternarySearchTrie = TernarySearchTrie<T>(caseSensitive)
 
     /**
@@ -12,9 +12,9 @@ class KeySearch<T : Searchable>(caseSensitive: Boolean = false) {
      *
      * @param searchable object to be searchable
      * **/
-    fun add(searchable: T): KeySearch<T> {
+    fun add(searchable: T): KeywordSearch<T> {
         this.ternarySearchTrie.add(searchable)
-        return KeySearch()
+        return KeywordSearch()
     }
 
     /**
