@@ -97,8 +97,8 @@ internal class KeySearchTest {
     @Test
     fun testKeywordCaseSensitiveMiss() {
         val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
-        val keySearch = buildFrom(citiesInputStream, City::class.java)
-        val result = keySearch.itemsWithKeyword("londoN") // default is case sensitive
+        val keySearch = buildFrom(citiesInputStream, City::class.java, caseSensitive = true)
+        val result = keySearch.itemsWithKeyword("londoN") // default is case insensitive
         assert(result is SearchResult.Miss)
     }
 
@@ -106,8 +106,8 @@ internal class KeySearchTest {
     fun testKeywordCaseInsensitiveHit() {
         val citiesInputStream = KeySearchTest::class.java.getResourceAsStream("/cities.json")
         val keySearch = buildFrom(citiesInputStream, City::class.java, caseSensitive = false)
-        val result = keySearch.itemsWithKeyword("londoN") // default is case sensitive
-        assert(result is SearchResult.Miss)
+        val result = keySearch.itemsWithKeyword("londoN") // default is case insensitive
+        assert(result is SearchResult.Hit)
     }
 
     @Test
