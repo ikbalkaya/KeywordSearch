@@ -39,9 +39,9 @@ data class Geoname(val geoname_id: String, val name: String,
         get() = name.lowercase(Locale.getDefault())
 }
 inline fun <reified T:Searchable> buildFrom(inputStream: InputStream, t:Class<T> ,
-                                            caseSensitive: Boolean = true) : KeySearch<T>{
+                                            caseSensitive: Boolean = false) : KeySearch<T>{
     //read as stream for memory efficiency
-    val keySearch = KeySearch<T>()
+    val keySearch = KeySearch<T>(caseSensitive)
     val jsonReader = JsonReader(inputStream.reader())
     jsonReader.beginArray()
     //read json
