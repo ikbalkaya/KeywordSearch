@@ -77,8 +77,9 @@ internal class TernarySearchTrie<T : Searchable>(private val caseSensitive: Bool
      * */
     fun itemsWithPrefix(prefix: String): List<T> {
         require(prefix.isNotEmpty())
+
         val items = mutableListOf<T>()
-        findItemsWithPrefix(root, prefix, items)
+        findItemsWithPrefix(root, if (caseSensitive) prefix else prefix.lowercase(), items)
         return items
     }
 
